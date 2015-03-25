@@ -11,17 +11,8 @@
     color: #fff;
 
     #outer-wrapper {
-        background: @mozIDBlue;
-    }
-
-    a {
-        color: #fff;
-
-        &:hover,
-        &:focus,
-        &:active {
-            //text-decoration: underline;
-        }
+        background: @mozIDBlue url(/media/img/firefox/family/index/aurora.png) right top no-repeat;
+        border-top: 4px solid #fff;
     }
 
     #wrapper {
@@ -59,11 +50,12 @@
     background-image: url(/media/img/firefox/family/index/sprite.png);
     background-position: @posx @posy;
     overflow: hidden;
+    position: absolute;
+    display: block;
+    content: '';
 
-    @media (-webkit-min-device-pixel-ratio: 1.5),
-       (                min-resolution: 1.5dppx),
-       (                min-resolution: 144dpi) {
-
+    @media @highdpi {
+        // high res image
     }
 }
 
@@ -73,11 +65,8 @@ ul {
 
 // conditional download bar
 #conditional-download-bar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 3;
-    height: 40px;
+    min-height: 1em;
+    padding: 10px 0;
     width: 100%;
     text-align: center;
     overflow: hidden;
@@ -89,28 +78,125 @@ ul {
     &.visible {
         .transform(translateY(0));
     }
+
+    .button-flat {
+        .font-size(@smallFontSize);
+        padding: .5em 30px;
+        margin: 0 10px;
+    }
+
+    .message {
+        display: none;
+    }
+
+    #dlbar-fx-desktop {
+        display: block;
+    }
+
+}
+
+#moztab {
+    .image-replaced();
+    background: url(/media/img/firefox/family/nav-sprite.png) 0 -146px no-repeat;
+    display: block;
+    width: 146px;
+    height: 36px;
+    position: absolute;
+    right: 80px;
+    top: 0;
+
+    @media (max-width: @breakDesktopWide) {
+        right: 0;
+    }
+
+    @media @highdpi {
+        background-image: url(/media/img/firefox/family/nav-sprite-high-res.png);
+        .background-size(146px 273px);
+    }
 }
 
 // header
 #header {
     position: relative;
-    height: 570px;
     z-index: 2;
-    overflow: hidden;
+    height: 570px;
+    background: url(/media/img/firefox/family/index/fox.png) ~"calc(50% + 580px)" -135px no-repeat;
+    margin-bottom: -8px;
 
     .content {
-        padding: (@baseLine * 2) 0 0 70px;
-        overflow-y: visible;
+        padding: 140px 0 0;
+        position: relative;
+
+        &:before {
+            .fxfamily-sprite(0, -471px);
+            width: 105px;
+            height: 108px;
+            top: 30px;
+            left: 80px;
+            z-index: 5;
+        }
+    }
+
+    h1 {
+        margin: 0 0 20px 80px;
+        width: 540px;
+        text-align: center;
+    }
+
+    @media @highdpi {
+        background-image: url(/media/img/firefox/family/index/fox-high-res.png);
+        .background-size(1184px 704px);
     }
 }
 
-#fox {
-    position: absolute;
-    top: -129px;
-    left: 663px;
-    width: 1184px;
-    height: 704px;
-    background: url(/media/img/firefox/family/index/fox.png) left top no-repeat;
+[lang~='en'] #header h1 {
+    color: #bee1f5;
+    .font-size(60px);
+    text-align: right;
+
+    span {
+        display: block;
+        text-align: left;
+    }
+
+    b {
+        color: #fff;
+        font-weight: normal;
+        .font-size(96px);
+        letter-spacing: -.05em;
+    }
+
+    img {
+        float: right;
+        vertical-align: top;
+        margin: 16px 0 0 20px;
+    }
+}
+
+@media (max-width: @breakDesktopWide) {
+    #header {
+        .content:before {
+            left: 40px;
+        }
+
+        h1 {
+            width: 400px;
+            margin: 40px 0 20px 40px;
+
+            img {
+                width: 248px;
+                height: auto;
+            }
+        }
+    }
+
+    [lang~='en'] #header h1 {
+        .font-size(44px);
+
+        b {
+            .font-size(72px);
+        }
+    }
 }
 
 .product-list {
@@ -118,23 +204,51 @@ ul {
     margin: 0;
     list-style-type: none;
 
-    li {
+    .product {
         float: left;
         margin: 0;
-        width: (460px - (@baseLine * 2));
-        padding: (@baseLine * 2) @baseLine 0;
+        width: 460px;
+        overflow: hidden;
 
         @media (max-width: @breakDesktopWide) {
-            width: (320px - @baseLine);
-            padding-left: @baseLine / 2;
-            padding-right: @baseLine / 2;
+            width: 333px;
+        }
+
+        .inner {
+            position: relative;
+            padding: 50px (@gridGutterWidth * 2) 180px;
+            min-height: 80px;
+
+            @media (max-width: @breakDesktopWide) {
+                padding: 50px @gridGutterWidth 180px;
+            }
         }
     }
 
-    h2 a {
+    h2 {
         .trailing-arrow();
-        text-decoration: none;
+
+        span {
+            font-style: italic;
+            font-size: .75em;
+        }
     }
+
+    a {
+        text-decoration: none;
+        display: block;
+
+        &:hover,
+        &:focus,
+        &:active {
+            text-decoration: none;
+
+            h2, h3 {
+                text-decoration: underline;
+            }
+        }
+    }
+
 }
 
 #products-primary {
@@ -148,12 +262,34 @@ ul {
         .font-size(36px);
     }
 
-    h3 {
+    p {
         .font-size(18px);
+    }
+
+    a {
+        color: #fff;
     }
 
     .container {
         padding: 0 (@baseLine / 2);
+    }
+
+    .highlight {
+        background: #ffcd02 url(/media/img/firefox/family/index/promo-bg.png) center top no-repeat;
+        color: #e14164;
+
+        @media @highdpi {
+            background-image: url(/media/img/firefox/family/index/promo-bg-high-res.png);
+            .background-size(600px 450px);
+        }
+
+        a {
+            color: #e14164;
+
+            h2, h3, p {
+                color: #e14164;
+            }
+        }
     }
 
     @media (max-width: @breakDesktopWide) {
@@ -161,46 +297,90 @@ ul {
             .font-size(30px);
         }
 
-        h3 {
+        p {
             .font-size(@largeFontSize);
         }
     }
 }
 
-#img-desktop {
+#product-desktop .inner:after {
     .fxfamily-sprite(0px, 0px);
-    width: 307px;
+    width: 308px;
     height: 148px;
+    bottom: 0;
+    left: 50%;
+    margin-left: -154px;
 }
 
-#img-android {
+#product-android .inner:after {
     .fxfamily-sprite(0px, -148px);
-    width: 309px;
+    width: 308px;
     height: 177px;
+    bottom: 0;
+    left: 0;
+
+    @media (max-width: @breakDesktopWide) {
+        left: -90px;
+    }
 }
 
-#img-android-robot {
+#product-android .btn-google-play {
+    position: absolute;
+    right: 30px;
+    top: 215px;
+    z-index: 5;
+
+    @media (max-width: @breakDesktopWide) {
+        right: 20px;
+    }
+}
+
+#product-android .inner:before {
     .fxfamily-sprite(0px, -660px);
     width: 66px;
     height: 90px;
+    top: 0;
+    left: 0;
+
+    @media (max-width: @breakDesktopWide) {
+        top: -20px;
+    }
 }
 
-#img-google-play {
-    .fxfamily-sprite(120px, -579px);
-    width: 135px;
-    height: 48px;
-    display: block;
-    //.image-replaced();
-}
-
-#img-fxos {
+#product-fxos .inner:after {
     .fxfamily-sprite(0px, -325px);
-    width: 221px;
+    width: 222px;
     height: 146px;
+    bottom: 0;
+    left: 50%;
+    margin-left: -111px;
 }
 
 #products-secondary {
     background: #efefef;
+    margin: 0;
+
+    a {
+        color: @linkBlue;
+
+        h2 {
+            color: @linkBlue;
+        }
+
+        p {
+            color: #999;
+        }
+
+        &:hover,
+        &:focus,
+        &:active {
+            color: darken(@linkBlue, 10%);
+
+            h2, p {
+                color: darken(@linkBlue, 10%);
+            }
+        }
+    }
 }
 
 #footer {
