@@ -252,10 +252,10 @@ def all_downloads(request, channel):
 @never_cache
 def firefox_os_geo_redirect(request):
     country = get_country_from_request(request)
-    try:
-        version = settings.FIREFOX_OS_COUNTRY_VERSIONS[country]
-    except KeyError:
-        version = settings.FIREFOX_OS_COUNTRY_VERSIONS['default']
+    version = settings.FIREFOX_OS_COUNTRY_VERSIONS.get(
+        country,
+        settings.FIREFOX_OS_COUNTRY_VERSIONS['default']
+    )
 
     return HttpResponseRedirect(reverse('firefox.os.ver.{0}'.format(version)))
 
