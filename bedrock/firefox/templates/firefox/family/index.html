@@ -17,7 +17,6 @@
 {% block site_header %}{% endblock %}
 
 {% block content %}
-
 <div id="conditional-download-bar" class="visible">
   <div class="content">
     <div class="message" id="dlbar-fx-desktop">
@@ -52,8 +51,6 @@
     </h1>
   </div>{#-- /.content --#}
 </header>{#-- /#header --#}
-
-<!-- <div id="fox"></div> -->
 
 <section id="products-primary">
   <div class="content">
@@ -99,44 +96,52 @@
 <section id="products-secondary">
   <div class="content">
     <ul class="product-list">
-      <li class="product" id="hello">
-        <a href="{{ url('firefox.hello') }}">
-          <h2>{{ _('Firefox Hello') }}</h2>
-          <p>{{ _('Free, easy video conversations.') }}</p>
-        </a>
+      <li class="product" id="product-hello">
+        <div class="inner">
+          <a href="{{ url('firefox.hello') }}">
+            <h2>{{ _('Firefox Hello') }}</h2>
+            <p>{{ _('Free, easy video conversations.') }}</p>
+          </a>
+        </div>
       </li>
-      <li class="product" id="marketplace">
-        <a rel="external" href="https://marketplace.firefox.com/">
-          <h2>{{ _('Firefox Marketplace') }}</h2>
-          <p>{{ _('Discover and download Web apps.') }}</p>
-        </a>
+      <li class="product" id="product-marketplace">
+        <div class="inner">
+          <a rel="external" href="https://marketplace.firefox.com/">
+            <h2>{{ _('Firefox Marketplace') }}</h2>
+            <p>{{ _('Discover and download Web apps.') }}</p>
+          </a>
+        </div>
       </li>
-      <li class="product" id="sync">
-        <a href="{{ url('firefox.sync') }}">
-          <h2>{{ _('Sync') }}</h2>
-          <p>{{ _('Connect Firefox wherever you use it.') }}</p>
-        </a>
+      <li class="product" id="product-sync">
+        <div class="inner">
+          <a href="{{ url('firefox.sync') }}">
+            <h2>{{ _('Sync') }}</h2>
+            <p>{{ _('Connect Firefox wherever you use it.') }}</p>
+          </a>
+        </div>
       </li>
     </ul>
   </div>{#-- /.content --#}
 </section>{#-- /#products-secondary --#}
-
 {% endblock %}
 
 {% block site_footer %}
 <footer id="footer">
-  <a href="{{ url('mozorg.home') }}">Mozilla</a>
-  <ul>
-    <li>
-      <a href="{{ url('privacy') }}">{{ _('Privacy Policy') }}</a>
-    </li>
-    <li>
-      <a href="{{ url('privacy.notices.websites') }}#cookies">{{ _('Cookies') }}</a>
-    </li>
-    <li>
-      <a href="{{ url('legal.index') }}">{{ _('Legal Notices') }}</a>
-    </li>
-  </ul>
+  <div class="content">
+    <a class="mozlogo" href="{{ url('mozorg.home') }}">Mozilla</a>
+
+    <ul>
+      <li>
+        <a href="{{ url('privacy') }}">{{ _('Privacy Policy') }}</a>
+      </li>
+      <li>
+        <a href="{{ url('privacy.notices.websites') }}#cookies">{{ _('Cookies') }}</a>
+      </li>
+      <li>
+        <a href="{{ url('legal.index') }}">{{ _('Legal Notices') }}</a>
+      </li>
+    </ul>
+  </div>
 </footer>
 {% endblock %}
 

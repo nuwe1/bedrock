@@ -18,6 +18,8 @@
     #wrapper {
         width: 100%;
         overflow: hidden;
+        margin: 0;
+        padding: 0;
     }
 
     h1, h2, h3, h4, h5, h6, .huge, .large {
@@ -45,7 +47,9 @@
     }
 }
 
-// page specific styles
+
+
+// Handy sprite mixin
 .fxfamily-sprite(@posx, @posy) {
     background-image: url(/media/img/firefox/family/index/sprite.png);
     background-position: @posx @posy;
@@ -59,11 +63,8 @@
     }
 }
 
-ul {
-    margin: 0;
-}
 
-// conditional download bar
+// Conditional download bar
 #conditional-download-bar {
     min-height: 1em;
     padding: 10px 0;
@@ -95,6 +96,9 @@ ul {
 
 }
 
+
+
+// Mozilla tab (like tabzilla, but not)
 #moztab {
     .image-replaced();
     background: url(/media/img/firefox/family/nav-sprite.png) 0 -146px no-repeat;
@@ -115,7 +119,9 @@ ul {
     }
 }
 
-// header
+
+
+// Header
 #header {
     position: relative;
     z-index: 2;
@@ -149,6 +155,7 @@ ul {
     }
 }
 
+// Fancy title for English
 [lang~='en'] #header h1 {
     color: #bee1f5;
     .font-size(60px);
@@ -199,10 +206,13 @@ ul {
     }
 }
 
+
+
+// Base styles for product groups
 .product-list {
     .clearfix();
     margin: 0;
-    list-style-type: none;
+    list-style: none;
 
     .product {
         float: left;
@@ -251,8 +261,12 @@ ul {
 
 }
 
+
+
+// Primary tier - Desktop, Android, OS
 #products-primary {
     background: #00a7e0;
+    border-top: 1px solid rgba(0, 0, 0, .1);
 
     li {
         text-align: center;
@@ -274,6 +288,7 @@ ul {
         padding: 0 (@baseLine / 2);
     }
 
+    // Highlighted product
     .highlight {
         background: #ffcd02 url(/media/img/firefox/family/index/promo-bg.png) center top no-repeat;
         color: #e14164;
@@ -303,8 +318,10 @@ ul {
     }
 }
 
+
+// Firefox for Desktop
 #product-desktop .inner:after {
-    .fxfamily-sprite(0px, 0px);
+    .fxfamily-sprite(0, 0);
     width: 308px;
     height: 148px;
     bottom: 0;
@@ -312,6 +329,8 @@ ul {
     margin-left: -154px;
 }
 
+
+// Firefox for Android
 #product-android .inner:after {
     .fxfamily-sprite(0px, -148px);
     width: 308px;
@@ -324,6 +343,20 @@ ul {
     }
 }
 
+// Android mascot
+#product-android .inner:before {
+    .fxfamily-sprite(0, -660px);
+    width: 66px;
+    height: 90px;
+    top: 0;
+    left: 0;
+
+    @media (max-width: @breakDesktopWide) {
+        top: -20px;
+    }
+}
+
+// Google Play button
 #product-android .btn-google-play {
     position: absolute;
     right: 30px;
@@ -335,20 +368,9 @@ ul {
     }
 }
 
-#product-android .inner:before {
-    .fxfamily-sprite(0px, -660px);
-    width: 66px;
-    height: 90px;
-    top: 0;
-    left: 0;
-
-    @media (max-width: @breakDesktopWide) {
-        top: -20px;
-    }
-}
-
+// Firefox OS
 #product-fxos .inner:after {
-    .fxfamily-sprite(0px, -325px);
+    .fxfamily-sprite(0, -325px);
     width: 222px;
     height: 146px;
     bottom: 0;
@@ -356,9 +378,25 @@ ul {
     margin-left: -111px;
 }
 
+
+
+// Secondary tier - Hello, Marketplace, Sync
 #products-secondary {
     background: #efefef;
-    margin: 0;
+    border-top: 1px solid rgba(0, 0, 0, .1);
+
+    .inner {
+        padding: 45px 20px 35px 160px;
+    }
+
+    h2 {
+        .font-size(24px);
+        margin: 0 0 .15em;
+    }
+
+    p {
+        margin: 0;
+    }
 
     a {
         color: @linkBlue;
@@ -383,6 +421,95 @@ ul {
     }
 }
 
+// Hello
+#product-hello {
+    h2:before {
+        .fxfamily-sprite(-192px, -471px);
+        width: 82px;
+        height: 76px;
+        top: 43px;
+        left: 60px;
+    }
+}
+
+// Marketplace
+#product-marketplace {
+    h2:before {
+        .fxfamily-sprite(-105px, -471px);
+        width: 87px;
+        height: 83px;
+        top: 35px;
+        left: 55px;
+    }
+}
+
+// Sync
+#product-sync {
+    h2:before {
+        .fxfamily-sprite(0, -579px);
+        width: 120px;
+        height: 81px;
+        top: 35px;
+        left: 30px;
+    }
+}
+
+@media (max-width: @breakDesktopWide) {
+    #products-secondary .inner {
+        padding-left: 140px;
+    }
+
+    #product-hello h2:before {
+        left: 40px;
+    }
+
+    #product-marketplace h2:before {
+        left: 30px;
+    }
+
+    #product-sync h2:before {
+        left: 10px;
+    }
+}
+
+
+// Footer
 #footer {
     background: #fff;
+    border-top: 1px solid rgba(0, 0, 0, .1);
+
+    .content {
+        padding: 45px 0;
+        text-align: center;
+    }
+
+    .mozlogo {
+        .image-replaced();
+        display: block;
+        margin: 0 auto @baseLine;
+        background: url(/media/img/firefox/family/index/sprite.png) -66px -660px no-repeat;
+        width: 94px;
+        height: 25px;
+    }
+
+    ul {
+        margin: 0;
+        list-style: none;
+        .font-size(@smallFontSize);
+
+        li {
+            display: inline;
+            margin: 0 10px;
+
+            &:after {
+                content: '•';
+                color: @textColorPrimary;
+                margin: 0 -10px 0 10px;
+            }
+
+            &:last-child:after {
+                content: '';
+            }
+        }
+    }
 }
