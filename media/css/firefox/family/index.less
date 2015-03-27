@@ -1,0 +1,515 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+@import "../../sandstone/lib.less";
+
+// potential general styles for new mozilla id themed pages
+@mozIDBlue: #0c99d5;
+
+.mozid {
+    color: #fff;
+
+    #outer-wrapper {
+        background: @mozIDBlue url(/media/img/firefox/family/index/aurora.png) right top no-repeat;
+        border-top: 4px solid #fff;
+    }
+
+    #wrapper {
+        width: 100%;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1, h2, h3, h4, h5, h6, .huge, .large {
+        color: #fff;
+        text-shadow: none;
+    }
+}
+
+.content {
+    .border-box();
+    width: @breakDesktopWide;
+    margin: 0 auto;
+
+    @media (max-width: @breakDesktopWide) {
+        width: @breakDesktop;
+    }
+
+    @media (max-width: @breakDesktop) {
+        width: @breakTablet;
+    }
+
+    @media (max-width: @breakTablet) {
+        width: 100%;
+        padding: @baseLine / 2;
+    }
+}
+
+
+
+// Handy sprite mixin
+.fxfamily-sprite(@posx, @posy) {
+    background-image: url(/media/img/firefox/family/index/sprite.png);
+    background-position: @posx @posy;
+    overflow: hidden;
+    position: absolute;
+    display: block;
+    content: '';
+
+    @media @highdpi {
+        // high res image
+    }
+}
+
+
+// Conditional download bar
+#conditional-download-bar {
+    min-height: 1em;
+    padding: 10px 0;
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+    background: #fff;
+    color: @textColorPrimary;
+    .transform(translateY(-51px));
+    .transition(all 0.25s ease);
+
+    &.visible {
+        .transform(translateY(0));
+    }
+
+    .button-flat {
+        .font-size(@smallFontSize);
+        padding: .5em 30px;
+        margin: 0 10px;
+    }
+
+    .message {
+        display: none;
+    }
+
+    #dlbar-fx-desktop {
+        display: block;
+    }
+
+}
+
+
+
+// Mozilla tab (like tabzilla, but not)
+#moztab {
+    .image-replaced();
+    background: url(/media/img/firefox/family/nav-sprite.png) 0 -146px no-repeat;
+    display: block;
+    width: 146px;
+    height: 36px;
+    position: absolute;
+    right: 80px;
+    top: 0;
+
+    @media (max-width: @breakDesktopWide) {
+        right: 0;
+    }
+
+    @media @highdpi {
+        background-image: url(/media/img/firefox/family/nav-sprite-high-res.png);
+        .background-size(146px 273px);
+    }
+}
+
+
+
+// Header
+#header {
+    position: relative;
+    z-index: 2;
+    height: 570px;
+    background: url(/media/img/firefox/family/index/fox.png) ~"calc(50% + 580px)" -135px no-repeat;
+    margin-bottom: -8px;
+
+    .content {
+        padding: 140px 0 0;
+        position: relative;
+
+        &:before {
+            .fxfamily-sprite(0, -471px);
+            width: 105px;
+            height: 108px;
+            top: 30px;
+            left: 80px;
+            z-index: 5;
+        }
+    }
+
+    h1 {
+        margin: 0 0 20px 80px;
+        width: 540px;
+        text-align: center;
+    }
+
+    @media @highdpi {
+        background-image: url(/media/img/firefox/family/index/fox-high-res.png);
+        .background-size(1184px 704px);
+    }
+}
+
+// Fancy title for English
+[lang~='en'] #header h1 {
+    color: #bee1f5;
+    .font-size(60px);
+    text-align: right;
+
+    span {
+        display: block;
+        text-align: left;
+    }
+
+    b {
+        color: #fff;
+        font-weight: normal;
+        .font-size(96px);
+        letter-spacing: -.05em;
+    }
+
+    img {
+        float: right;
+        vertical-align: top;
+        margin: 16px 0 0 20px;
+    }
+}
+
+@media (max-width: @breakDesktopWide) {
+    #header {
+        .content:before {
+            left: 40px;
+        }
+
+        h1 {
+            width: 400px;
+            margin: 40px 0 20px 40px;
+
+            img {
+                width: 248px;
+                height: auto;
+            }
+        }
+    }
+
+    [lang~='en'] #header h1 {
+        .font-size(44px);
+
+        b {
+            .font-size(72px);
+        }
+    }
+}
+
+
+
+// Base styles for product groups
+.product-list {
+    .clearfix();
+    margin: 0;
+    list-style: none;
+
+    .product {
+        float: left;
+        margin: 0;
+        width: 460px;
+        overflow: hidden;
+
+        @media (max-width: @breakDesktopWide) {
+            width: 333px;
+        }
+
+        .inner {
+            position: relative;
+            padding: 50px (@gridGutterWidth * 2) 180px;
+            min-height: 80px;
+
+            @media (max-width: @breakDesktopWide) {
+                padding: 50px @gridGutterWidth 180px;
+            }
+        }
+    }
+
+    h2 {
+        .trailing-arrow();
+
+        span {
+            font-style: italic;
+            font-size: .75em;
+        }
+    }
+
+    a {
+        text-decoration: none;
+        display: block;
+
+        &:hover,
+        &:focus,
+        &:active {
+            text-decoration: none;
+
+            h2, h3 {
+                text-decoration: underline;
+            }
+        }
+    }
+
+}
+
+
+
+// Primary tier - Desktop, Android, OS
+#products-primary {
+    background: #00a7e0;
+    border-top: 1px solid rgba(0, 0, 0, .1);
+
+    li {
+        text-align: center;
+    }
+
+    h2 {
+        .font-size(36px);
+    }
+
+    p {
+        .font-size(18px);
+    }
+
+    a {
+        color: #fff;
+    }
+
+    .container {
+        padding: 0 (@baseLine / 2);
+    }
+
+    // Highlighted product
+    .highlight {
+        background: #ffcd02 url(/media/img/firefox/family/index/promo-bg.png) center top no-repeat;
+        color: #e14164;
+
+        @media @highdpi {
+            background-image: url(/media/img/firefox/family/index/promo-bg-high-res.png);
+            .background-size(600px 450px);
+        }
+
+        a {
+            color: #e14164;
+
+            h2, h3, p {
+                color: #e14164;
+            }
+        }
+    }
+
+    @media (max-width: @breakDesktopWide) {
+        h2 {
+            .font-size(30px);
+        }
+
+        p {
+            .font-size(@largeFontSize);
+        }
+    }
+}
+
+
+// Firefox for Desktop
+#product-desktop .inner:after {
+    .fxfamily-sprite(0, 0);
+    width: 308px;
+    height: 148px;
+    bottom: 0;
+    left: 50%;
+    margin-left: -154px;
+}
+
+
+// Firefox for Android
+#product-android .inner:after {
+    .fxfamily-sprite(0px, -148px);
+    width: 308px;
+    height: 177px;
+    bottom: 0;
+    left: 0;
+
+    @media (max-width: @breakDesktopWide) {
+        left: -90px;
+    }
+}
+
+// Android mascot
+#product-android .inner:before {
+    .fxfamily-sprite(0, -660px);
+    width: 66px;
+    height: 90px;
+    top: 0;
+    left: 0;
+
+    @media (max-width: @breakDesktopWide) {
+        top: -20px;
+    }
+}
+
+// Google Play button
+#product-android .btn-google-play {
+    position: absolute;
+    right: 30px;
+    top: 215px;
+    z-index: 5;
+
+    @media (max-width: @breakDesktopWide) {
+        right: 20px;
+    }
+}
+
+// Firefox OS
+#product-fxos .inner:after {
+    .fxfamily-sprite(0, -325px);
+    width: 222px;
+    height: 146px;
+    bottom: 0;
+    left: 50%;
+    margin-left: -111px;
+}
+
+
+
+// Secondary tier - Hello, Marketplace, Sync
+#products-secondary {
+    background: #efefef;
+    border-top: 1px solid rgba(0, 0, 0, .1);
+
+    .inner {
+        padding: 45px 20px 35px 160px;
+    }
+
+    h2 {
+        .font-size(24px);
+        margin: 0 0 .15em;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    a {
+        color: @linkBlue;
+
+        h2 {
+            color: @linkBlue;
+        }
+
+        p {
+            color: #999;
+        }
+
+        &:hover,
+        &:focus,
+        &:active {
+            color: darken(@linkBlue, 10%);
+
+            h2, p {
+                color: darken(@linkBlue, 10%);
+            }
+        }
+    }
+}
+
+// Hello
+#product-hello {
+    h2:before {
+        .fxfamily-sprite(-192px, -471px);
+        width: 82px;
+        height: 76px;
+        top: 43px;
+        left: 60px;
+    }
+}
+
+// Marketplace
+#product-marketplace {
+    h2:before {
+        .fxfamily-sprite(-105px, -471px);
+        width: 87px;
+        height: 83px;
+        top: 35px;
+        left: 55px;
+    }
+}
+
+// Sync
+#product-sync {
+    h2:before {
+        .fxfamily-sprite(0, -579px);
+        width: 120px;
+        height: 81px;
+        top: 35px;
+        left: 30px;
+    }
+}
+
+@media (max-width: @breakDesktopWide) {
+    #products-secondary .inner {
+        padding-left: 140px;
+    }
+
+    #product-hello h2:before {
+        left: 40px;
+    }
+
+    #product-marketplace h2:before {
+        left: 30px;
+    }
+
+    #product-sync h2:before {
+        left: 10px;
+    }
+}
+
+
+// Footer
+#footer {
+    background: #fff;
+    border-top: 1px solid rgba(0, 0, 0, .1);
+
+    .content {
+        padding: 45px 0;
+        text-align: center;
+    }
+
+    .mozlogo {
+        .image-replaced();
+        display: block;
+        margin: 0 auto @baseLine;
+        background: url(/media/img/firefox/family/index/sprite.png) -66px -660px no-repeat;
+        width: 94px;
+        height: 25px;
+    }
+
+    ul {
+        margin: 0;
+        list-style: none;
+        .font-size(@smallFontSize);
+
+        li {
+            display: inline;
+            margin: 0 10px;
+
+            &:after {
+                content: '•';
+                color: @textColorPrimary;
+                margin: 0 -10px 0 10px;
+            }
+
+            &:last-child:after {
+                content: '';
+            }
+        }
+    }
+}
