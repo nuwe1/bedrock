@@ -1443,6 +1443,12 @@ PIPELINE_JS = {
         ),
         'output_filename': 'js/firefox_tiles-bundle.js',
     },
+    'firefox_family_index': {
+        'source_filenames': (
+            'js/firefox/family-index.js',
+        ),
+        'output_filename': 'js/firefox_family_index-bundle.js',
+    },
     'firefox_faq': {
         'source_filenames': (
             'js/base/mozilla-accordion.js',

@@ -13,6 +13,10 @@
     #outer-wrapper {
         background: @mozIDBlue url(/media/img/firefox/family/index/aurora.png) right top no-repeat;
         border-top: 4px solid #fff;
+
+        @media only screen and (max-width: @breakTablet) {
+            background-position: right -100px;
+        }
     }
 
     #wrapper {
@@ -30,20 +34,23 @@
 
 .content {
     .border-box();
-    width: @breakDesktopWide;
+    width: @widthDesktopWide;
     margin: 0 auto;
 
-    @media (max-width: @breakDesktopWide) {
-        width: @breakDesktop;
+    @media only screen and (max-width: @breakDesktopWide) {
+        width: @widthDesktop;
     }
 
-    @media (max-width: @breakDesktop) {
-        width: @breakTablet;
+    @media only screen and (max-width: @breakDesktop) {
+        width: @widthTablet;
     }
 
-    @media (max-width: @breakTablet) {
-        width: 100%;
-        padding: @baseLine / 2;
+    @media only screen and (max-width: @breakTablet) {
+        width: @widthMobile;
+    }
+
+    @media only screen and (min-width: @breakMobileLandscape) and (max-width: @breakTablet) {
+        width: @widthMobileLandscape;
     }
 }
 
@@ -53,15 +60,18 @@
 .fxfamily-sprite(@posx, @posy) {
     background-image: url(/media/img/firefox/family/index/sprite.png);
     background-position: @posx @posy;
+    background-repeat: no-repeat;
     overflow: hidden;
     position: absolute;
     display: block;
     content: '';
 
     @media @highdpi {
-        // high res image
+        background-image: url(/media/img/firefox/family/index/sprite-high-res.png);
+        .background-size(500px 645px);
     }
 }
+
 
 
 // Conditional download bar
@@ -80,42 +90,85 @@
         .transform(translateY(0));
     }
 
-    .button-flat {
-        .font-size(@smallFontSize);
-        padding: .5em 30px;
-        margin: 0 10px;
-    }
-
     .message {
         display: none;
+        padding: 0 (@gridGutterWidth * 3) 0 @gridGutterWidth;
+    }
+
+    .btn-download {
+        .font-size(@smallFontSize);
+        padding: .5em 30px;
+        margin: 5px 10px 0;
+        background-color: #6fbe4a;
+
+        &:hover,
+        &:focus,
+        &:active {
+            background-color: lighten(#6fbe4a, 5%);
+        }
     }
 
     #dlbar-fx-desktop {
         display: block;
     }
 
+    .btn-close {
+        .image-replaced();
+        border: 0;
+        cursor: pointer;
+        height: 30px;
+        width: 30px;
+        padding: 0;
+        position: absolute;
+        right: 30px;
+        top: 12px;
+        background: #efefef url(/media/img/firefox/family/index/closex.png) center center no-repeat;
+
+        &:hover {
+            background-color: darken(#efefef, 5%);
+        }
+
+        @media @highdpi {
+            background-image: url(/media/img/firefox/family/index/closex-high-res.png);
+            .background-size(19px 19px);
+        }
+
+    }
 }
 
 
 
 // Mozilla tab (like tabzilla, but not)
 #moztab {
-    .image-replaced();
-    background: url(/media/img/firefox/family/nav-sprite.png) 0 -146px no-repeat;
-    display: block;
-    width: 146px;
-    height: 36px;
     position: absolute;
-    right: 80px;
+    right: 0;
     top: 0;
 
-    @media (max-width: @breakDesktopWide) {
-        right: 0;
+    a {
+        .image-replaced();
+        background: url(/media/img/firefox/family/index/sprite.png) -90px -555px no-repeat;
+        display: block;
+        width: 148px;
+        height: 36px;
+        position: relative;
+        z-index: 10;
+
+        @media @highdpi {
+            background-image: url(/media/img/firefox/family/index/sprite-high-res.png);
+            .background-size(500px 645px);
+        }
     }
 
-    @media @highdpi {
-        background-image: url(/media/img/firefox/family/nav-sprite-high-res.png);
-        .background-size(146px 273px);
+    &:before {
+        content: '';
+        display: block;
+        width: 88px;
+        height: 26px;
+        background: @mozIDBlue;
+        position: absolute;
+        left: 28px;
+        top: 0;
+        z-index: 9;
     }
 }
 
@@ -126,17 +179,18 @@
     position: relative;
     z-index: 2;
     height: 570px;
-    background: url(/media/img/firefox/family/index/fox.png) ~"calc(50% + 580px)" -135px no-repeat;
+    background: url(/media/img/firefox/family/index/fox.png) ~"calc(50% + 580px)" bottom no-repeat;
     margin-bottom: -8px;
 
     .content {
-        padding: 140px 0 0;
+        padding: 150px 0 0;
         position: relative;
 
+        // Firefox logo
         &:before {
-            .fxfamily-sprite(0, -471px);
-            width: 105px;
-            height: 108px;
+            .fxfamily-sprite(-380px, 0);
+            width: 108px;
+            height: 112px;
             top: 30px;
             left: 80px;
             z-index: 5;
@@ -147,12 +201,22 @@
         margin: 0 0 20px 80px;
         width: 540px;
         text-align: center;
+
+        img {
+            margin: 10px 5px 0;
+            vertical-align: baseline;
+        }
     }
 
     @media @highdpi {
         background-image: url(/media/img/firefox/family/index/fox-high-res.png);
         .background-size(1184px 704px);
     }
+
+    @media only screen and (max-height: 600px) {
+        height: 420px;
+    }
+
 }
 
 // Fancy title for English
@@ -180,34 +244,9 @@
     }
 }
 
-@media (max-width: @breakDesktopWide) {
-    #header {
-        .content:before {
-            left: 40px;
-        }
-
-        h1 {
-            width: 400px;
-            margin: 40px 0 20px 40px;
-
-            img {
-                width: 248px;
-                height: auto;
-            }
-        }
-    }
-
-    [lang~='en'] #header h1 {
-        .font-size(44px);
-
-        b {
-            .font-size(72px);
-        }
-    }
-}
 
 
-
+/*--------------------------------------------------------------------------*/
 // Base styles for product groups
 .product-list {
     .clearfix();
@@ -217,26 +256,17 @@
     .product {
         float: left;
         margin: 0;
-        width: 460px;
+        width: 33.3%;
         overflow: hidden;
-
-        @media (max-width: @breakDesktopWide) {
-            width: 333px;
-        }
 
         .inner {
             position: relative;
-            padding: 50px (@gridGutterWidth * 2) 180px;
-            min-height: 80px;
-
-            @media (max-width: @breakDesktopWide) {
-                padding: 50px @gridGutterWidth 180px;
-            }
         }
     }
 
     h2 {
         .trailing-arrow();
+        margin: 0 0 .15em;
 
         span {
             font-style: italic;
@@ -262,18 +292,32 @@
 }
 
 
-
+/*--------------------------------------------------------------------------*/
 // Primary tier - Desktop, Android, OS
 #products-primary {
     background: #00a7e0;
     border-top: 1px solid rgba(0, 0, 0, .1);
+
+    .inner {
+        padding: 50px (@gridGutterWidth * 2) 180px;
+        min-height: 80px;
+
+        @media only screen and (max-width: @breakDesktopWide) {
+            padding: 40px @gridGutterWidth 150px;
+        }
+
+        @media only screen and (max-width: @breakDesktop) and (min-width: (@breakTablet)) {
+            padding: 40px @gridGutterWidth 150px;
+        }
+    }
 
     li {
         text-align: center;
     }
 
     h2 {
-        .font-size(36px);
+        .font-size(32px);
+        display: inline-block;
     }
 
     p {
@@ -282,10 +326,22 @@
 
     a {
         color: #fff;
-    }
 
-    .container {
-        padding: 0 (@baseLine / 2);
+        h2 {
+            padding-bottom: 1px;
+        }
+
+        p {
+            color: #bee1f5;
+        }
+
+        &:hover h2,
+        &:focus h2,
+        &:active h2 {
+            text-decoration: none;
+            padding-bottom: 0;
+            border-bottom: 1px solid;
+        }
     }
 
     // Highlighted product
@@ -307,9 +363,9 @@
         }
     }
 
-    @media (max-width: @breakDesktopWide) {
+    @media only screen and (max-width: @breakDesktopWide) {
         h2 {
-            .font-size(30px);
+            .font-size(28px);
         }
 
         p {
@@ -322,71 +378,119 @@
 // Firefox for Desktop
 #product-desktop .inner:after {
     .fxfamily-sprite(0, 0);
-    width: 308px;
-    height: 148px;
-    bottom: 0;
+    width: 378px;
+    height: 220px;
+    bottom: -65px;
     left: 50%;
-    margin-left: -154px;
-}
+    margin-left: -189px;
 
+    @media only screen and (max-width: @breakDesktopWide) {
+        bottom: -90px;
+    }
+}
 
 // Firefox for Android
-#product-android .inner:after {
-    .fxfamily-sprite(0px, -148px);
-    width: 308px;
-    height: 177px;
-    bottom: 0;
-    left: 0;
-
-    @media (max-width: @breakDesktopWide) {
-        left: -90px;
+#product-android {
+    .inner:after {
+        .fxfamily-sprite(0, -225px);
+        width: 470px;
+        height: 176px;
+        bottom: 0;
+        left: -160px;
     }
-}
 
-// Android mascot
-#product-android .inner:before {
-    .fxfamily-sprite(0, -660px);
-    width: 66px;
-    height: 90px;
-    top: 0;
-    left: 0;
-
-    @media (max-width: @breakDesktopWide) {
-        top: -20px;
+    // Android mascot
+    .inner:before {
+        .fxfamily-sprite(-225px, -405px);
+        width: 115px;
+        height: 125px;
+        top: -30px;
+        left: -45px;
     }
-}
 
-// Google Play button
-#product-android .btn-google-play {
-    position: absolute;
-    right: 30px;
-    top: 215px;
-    z-index: 5;
+    // Google Play button
+    .btn-google-play {
+        position: absolute;
+        right: 30px;
+        bottom: 60px;
+        z-index: 5;
+    }
 
-    @media (max-width: @breakDesktopWide) {
-        right: 20px;
+    @media only screen and (max-width: @breakDesktopWide) {
+        .inner:after {
+            left: -245px;
+            bottom: -30px;
+        }
+
+        .inner:before {
+            top: -50px;
+            left: -50px;
+        }
+
+        .btn-google-play {
+            right: 20px;
+            bottom: 40px;
+        }
+    }
+
+    @media only screen and (max-width: @breakDesktop) and (min-width: (@breakTablet)) {
+        .inner:after {
+            left: 50%;
+            bottom: -45px;
+            margin-left: -235px;
+        }
+
+        .inner:before {
+            top: -30px;
+            left: -45px;
+        }
+
+        .btn-google-play {
+            position: static;
+        }
+    }
+
+    @media only screen and (min-width: @breakMobileLandscape) and (max-width: @breakTablet) {
+        .inner:after {
+            left: 50%;
+            bottom: -45px;
+            margin-left: -235px;
+        }
+
+        .inner:before {
+            top: -30px;
+        }
+
+        .btn-google-play {
+            position: static;
+        }
     }
 }
 
 // Firefox OS
 #product-fxos .inner:after {
-    .fxfamily-sprite(0, -325px);
-    width: 222px;
+    .fxfamily-sprite(0, -405px);
+    width: 224px;
     height: 146px;
     bottom: 0;
     left: 50%;
-    margin-left: -111px;
+    margin-left: -112px;
+
+    @media only screen and (max-width: @breakDesktopWide) {
+        bottom: -20px;
+    }
 }
 
 
-
+/*--------------------------------------------------------------------------*/
 // Secondary tier - Hello, Marketplace, Sync
 #products-secondary {
     background: #efefef;
     border-top: 1px solid rgba(0, 0, 0, .1);
 
     .inner {
-        padding: 45px 20px 35px 160px;
+        padding: 50px 20px 50px 160px;
+        min-height: 50px;
     }
 
     h2 {
@@ -424,37 +528,53 @@
 // Hello
 #product-hello {
     h2:before {
-        .fxfamily-sprite(-192px, -471px);
-        width: 82px;
-        height: 76px;
-        top: 43px;
+        .fxfamily-sprite(-380px, -115px);
+        width: 84px;
+        height: 80px;
+        top: 40px;
         left: 60px;
-    }
-}
-
-// Marketplace
-#product-marketplace {
-    h2:before {
-        .fxfamily-sprite(-105px, -471px);
-        width: 87px;
-        height: 83px;
-        top: 35px;
-        left: 55px;
     }
 }
 
 // Sync
 #product-sync {
     h2:before {
-        .fxfamily-sprite(0, -579px);
+        .fxfamily-sprite(-345px, -405px);
         width: 120px;
         height: 81px;
-        top: 35px;
+        top: 32px;
         left: 30px;
     }
 }
 
-@media (max-width: @breakDesktopWide) {
+// Marketplace
+#product-marketplace {
+    h2:before {
+        .fxfamily-sprite(0, -555px);
+        width: 87px;
+        height: 83px;
+        top: 35px;
+        left: 55px;
+    }
+
+    // New window icon
+    h2:after {
+        content: '';
+        width: 13px;
+        height: 13px;
+        background: url(/media/img/firefox/family/nav-sprite5.png) -345px -515px no-repeat;
+        display: inline-block;
+        margin-left: 8px;
+
+        @media @highdpi {
+            background-image: url(/media/img/firefox/family/nav-sprite-high-res5.png);
+            .background-size(146px 297px);
+        }
+
+    }
+}
+
+@media only screen and (max-width: @breakDesktopWide) {
     #products-secondary .inner {
         padding-left: 140px;
     }
@@ -472,27 +592,28 @@
     }
 }
 
-
+/*--------------------------------------------------------------------------*/
 // Footer
 #footer {
     background: #fff;
     border-top: 1px solid rgba(0, 0, 0, .1);
 
     .content {
-        padding: 45px 0;
-        text-align: center;
+        padding: (@baseLine * 2) 0 (@baseLine * 3);
     }
 
     .mozlogo {
         .image-replaced();
-        display: block;
+        display: inline-block;
         margin: 0 auto @baseLine;
-        background: url(/media/img/firefox/family/index/sprite.png) -66px -660px no-repeat;
+        background: url(/media/img/firefox/family/index/sprite.png) -345px -485px no-repeat;
         width: 94px;
         height: 25px;
+        float: left;
     }
 
     ul {
+        float: right;
         margin: 0;
         list-style: none;
         .font-size(@smallFontSize);
@@ -513,3 +634,243 @@
         }
     }
 }
+
+
+
+/*--------------------------------------------------------------------------*/
+// Regular desktop layout, 1000px
+@media only screen and (max-width: @breakDesktopWide) {
+    #header {
+        background-position: ~"calc(50% + 540px)" bottom;
+        .background-size(1006px 598px);
+        height: 480px;
+
+        .content:before {
+            left: 30px;
+        }
+
+        h1 {
+            width: 420px;
+            margin-left: 30px;
+
+            img {
+                width: 248px;
+                height: auto;
+            }
+        }
+    }
+
+    [lang~='en'] #header h1 {
+        .font-size(44px);
+
+        b {
+            .font-size(72px);
+        }
+    }
+}
+
+
+
+/*--------------------------------------------------------------------------*/
+// Tablet layout, 760px
+@media only screen and (min-width: @breakTablet) and (max-width: @breakDesktop) {
+
+    #header {
+        background-position: ~"calc(50% + 540px)" bottom;
+        .background-size(888px 528px);
+        height: 400px;
+
+        .content:before {
+            left: 30px;
+        }
+
+        h1 {
+            margin-left: 30px;
+        }
+    }
+
+    .product-list .product {
+        width: auto;
+        float: none;
+    }
+
+    #products-primary {
+        .content {
+            width: auto;
+        }
+
+        .highlight {
+            background-position: left top;
+        }
+    }
+
+    #products-secondary {
+        .product-list .product {
+            width: 33.3%;
+            float: left;
+            text-align: center;
+
+            .inner {
+                padding: 120px @gridGutterWidth @baseLine;
+            }
+
+            h2 {
+                .font-size(20px);
+
+                &:before {
+                    left: 50%;
+                }
+            }
+        }
+    }
+
+    #product-hello h2:before {
+        top: @baseLine + 14;
+        margin-left: -41px;
+    }
+
+    #product-sync h2:before {
+        top: @baseLine + 4;
+        margin-left: -60px;
+    }
+
+    #product-marketplace h2:before {
+        top: @baseLine;
+        margin-left: -43px;
+    }
+}
+
+
+/*--------------------------------------------------------------------------*/
+// Mobile layout, 320px
+@media only screen and (max-width: @breakTablet) {
+
+    #header {
+        background-image: none;
+        height: auto;
+
+        .content {
+            padding: 160px 0 40px;
+
+            &:before {
+                top: 45px;
+                left: 50%;
+                margin-left: -52px;
+            }
+        }
+
+        h1 {
+            width: auto;
+            margin: 0 @gridGutterWidth @baseLine;
+            .font-size(30px);
+
+            b {
+                .font-size(40px);
+            }
+        }
+    }
+
+    [lang~='en'] #header h1 {
+        .font-size(30px);
+
+        b {
+            .font-size(40px);
+        }
+
+        img {
+            width: 165px;
+            height: 48px;
+            margin: 6px 0 0 10px;
+        }
+    }
+
+    .product-list .product {
+        width: 100%;
+        float: none;
+        min-width: @widthMobile;
+    }
+
+    #products-primary {
+        .content {
+            width: auto;
+        }
+
+        .highlight {
+            background-position: left top;
+        }
+    }
+
+    #products-secondary {
+        .inner {
+            padding: @baseLine @gridGutterWidth @baseLine 120px;
+            min-height: 50px;
+        }
+
+        // Shrink icons by 25%
+        h2:before {
+            .background-size(375px 484px);
+        }
+    }
+
+    #product-hello h2:before {
+        width: 63px;
+        height: 60px;
+        background-position: -286px -87px;
+        top: @baseLine - 5;
+        left: 30px;
+    }
+
+    #product-sync h2:before {
+        width: 90px;
+        height: 60px;
+        background-position: -258px -303px;
+        top: @baseLine - 5;
+        left: 15px;
+    }
+
+    #product-marketplace h2:before {
+        width: 68px;
+        height: 68px;
+        background-position: 0 -417px;
+        top: @baseLine - 5;
+        left: 30px;
+    }
+
+    #footer {
+        .content {
+            padding: @baseLine 0;
+            text-align: center;
+        }
+
+        .mozlogo {
+            float: none;
+        }
+
+        ul {
+            float: none;
+
+            li {
+                display: block;
+                margin: 0 0 .25em;
+
+                &:after {
+                    content: '';
+                }
+            }
+        }
+    }
+
+}
+
+
+/*--------------------------------------------------------------------------*/
+// Wide Mobile layout, 480px
+@media only screen and (min-width: @breakMobileLandscape) and (max-width: @breakTablet) {
+
+    [lang~='en'] #header h1 {
+        width: @widthMobile - (@gridGutterWidth * 2);
+        margin: 0 auto @baseLine;
+    }
+
+}
+
